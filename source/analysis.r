@@ -17,7 +17,8 @@ library("usmap")
 #
 # Loading in the `incarceration_trends.csv` data frame
 df <- read.csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv",
-               header = TRUE, stringsAsFactors = FALSE)
+  header = TRUE, stringsAsFactors = FALSE
+)
 View(df)
 #
 # ------------------------------------------------------------------------------
@@ -77,8 +78,8 @@ prison_pop <- left_join(total_pop, black_pop, by = "year")
 
 colnames(prison_pop) <- c("year", "avg_total_pop", "avg_black_pop")
 
-## 3. According to the most recent year, how many Black people were sent to 
-##    prison in Los Angeles County (black_prison_adm) as compared to the total number 
+## 3. According to the most recent year, how many Black people were sent to
+##    prison in Los Angeles County (black_prison_adm) as compared to the total number
 ##    of admitted prisoners (total_prison_adm), regardless of race? (ratio)
 
 # Creating data frame with prison admission information
@@ -135,7 +136,7 @@ b_a_m <- df_4 %>%
   group_by(year) %>%
   summarize(mean(black_male_prison_adm))
 
- 
+
 w_a_m <- df_4 %>%
   filter(white_male_prison_adm > 0) %>%
   group_by(year) %>%
@@ -151,38 +152,46 @@ theme_set(theme_bw())
 
 
 # plot
-chart1 <- ggplot(male_racial_avg, aes(x=year)) + 
-  geom_line(aes(y=black_male_adm, col="Black Males")) + 
-  geom_line(aes(y=white_male_adm, col="White Males")) + 
-  labs(title="Yearly Average Male Prison Admissions", 
-       subtitle="Average Number of Male Prison Admissions Across All U.S. Counties", 
-       caption="Source: Vera Institute",
-       y="# of Admissions") +
-  scale_color_manual(name="", 
-                     values = c("Black Males"="#00ba38", "White Males"="#f8766d")) +
+chart1 <- ggplot(male_racial_avg, aes(x = year)) +
+  geom_line(aes(y = black_male_adm, col = "Black Males")) +
+  geom_line(aes(y = white_male_adm, col = "White Males")) +
+  labs(
+    title = "Yearly Average Male Prison Admissions",
+    subtitle = "Average Number of Male Prison Admissions Across All U.S. Counties",
+    caption = "Source: Vera Institute",
+    y = "# of Admissions"
+  ) +
+  scale_color_manual(
+    name = "",
+    values = c("Black Males" = "#00ba38", "White Males" = "#f8766d")
+  ) +
   theme(panel.grid.minor = element_blank())
 
 #
 # ------------------------------------------------------------------------------
 # Chart comparing Black prison population to the total prison population:
-chart2 <- ggplot(prison_pop) + 
-  geom_point(mapping = aes(x = avg_total_pop, y = avg_black_pop),
-             color = "red",
-             alpha = .3) +
-  labs(subtitle="Average Black & Total Prison Population Across All Counties", 
-       y="Black Population", 
-       x="Total Population", 
-       title="Total Prison Population v.s. Black Prison Population", 
-       caption = "Source: Vera Institute")
+chart2 <- ggplot(prison_pop) +
+  geom_point(
+    mapping = aes(x = avg_total_pop, y = avg_black_pop),
+    color = "red",
+    alpha = .3
+  ) +
+  labs(
+    subtitle = "Average Black & Total Prison Population Across All Counties",
+    y = "Black Population",
+    x = "Total Population",
+    title = "Total Prison Population v.s. Black Prison Population",
+    caption = "Source: Vera Institute"
+  )
 
 #
 # ------------------------------------------------------------------------------
-# Map of Black prison incarceration rates in U.S. (by state): 
+# Map of Black prison incarceration rates in U.S. (by state):
 ## dplyr data wrangling
 pop_map <- df %>%
   select(year, county_name, state, black_prison_pop) %>%
-  replace_na(list(black_prison_pop = 0)) 
-  
+  replace_na(list(black_prison_pop = 0))
+
 black_pop_map <- pop_map %>%
   filter(black_prison_pop > 0) %>%
   filter(year == max(year)) %>%
@@ -192,9 +201,9 @@ black_pop_map <- pop_map %>%
 colnames(black_pop_map) <- c("state", "avg_black_pop")
 
 
-map <- plot_usmap(data = black_pop_map, values = "avg_black_pop", color = "red") + 
+map <- plot_usmap(data = black_pop_map, values = "avg_black_pop", color = "red") +
   scale_fill_continuous(
-    low = "white", high = "red", name = "Imprisoned Black Population (2016)", 
+    low = "white", high = "red", name = "Imprisoned Black Population (2016)",
     label = scales::comma
   ) + theme(legend.position = "right") +
   labs(
