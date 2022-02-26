@@ -1,0 +1,80 @@
+---
+title: "index.Rmd"
+author: "Eric Large"
+date: "2/16/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("../source/analysis.r")
+library(tidyverse)
+```
+
+## Assignment 3
+
+### Introduction: Analyzing Black Incarceration Rates
+
+This analysis focuses on the incarceration rates of Black people in the United
+States, who have faced systemic racism and institutional oppression since the 
+formation of the country. With racism being one of the most prominent social
+issues over the last 200 years, we have seen a plethora of examples in which Black
+Americans are targeted unjustly. Whether it be the Jim Crow laws of the past,
+police brutality, or the ongoing War on Drugs, it is clear that BIPOC individuals
+in the U.S. do not have the same privileges the rest of the population has. As a 
+result, I narrowed down my analysis on incarceration rates to focus on five unique
+statistics: 1) the county with the highest population of incarcerated Black
+people in prison (black_prison_pop), 2) the ratio of incarcerated Black people 
+(black_prison_pop) to the total incarcerated population in prison (total_prison_
+pop) in this (Los Angeles) county, 3) the ratio of Black prison admissions 
+(black_prison_adm) to total prison admissions (total_prison_adm) in Los Angeles 
+County, 4) the average admission numbers of incarcerated Black people in prison 
+(black_prison_adm) across all counties since 1970, and finally 5) the average
+yearly admissions for Black and White males across all counties.
+
+### Summary Information
+
+1) Los Angeles County.
+2) ~37% of all prisoners in LA County were Black as of 2016.
+3) ~32% of all admitted prisoners in LA county were Black as of 2016.
+4) *See `yearly_black_avg_adm` data frame.
+5) *See Chart1.
+
+## Trends Over Time Chart
+
+Description: The purpose of this line graph visualization is to highlight the
+difference between Black and White male admissions into prison, across all U.S.
+counties since data collection from the Vera Institute began in 1970. This data
+averages the number of admissions across all counties for each year. Furthermore,
+this visual points out how Black males in the U.S. have been targets for unjust
+arrest and prison time for decades.
+
+```{r chart1, echo=FALSE}
+plot(chart1)
+```
+
+## Variable Comparison Chart
+
+Description: This scatter plot demonstrates the high Black population in the U.S.
+prison system, that grows almost linearly to the total prison population. Once
+again, the aim of this visual is to point out the discrepancy between Black
+incarceration rates against the total prison population.
+
+```{r chart2, echo=FALSE}
+plot(chart2)
+```
+
+## Map
+
+Description: This mapping of the United States looks at the average imprisoned
+Black population in each state as of 2016. Moreover, the year 2016 is highlighted
+because it is the most recent year with data on `black_prison_pop`. The states
+colored in gray represent states without any data on the variable. However, this
+visual is still useful as it sheds light on real-world data trends across the 
+country. Looking at the legend, the darker shades of red represent states with
+a greater imprisoned Black population, while the lighter red/white shaded states
+have fewer imprisoned Black people.
+
+```{r map, echo=FALSE}
+plot(map)
+```
